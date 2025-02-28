@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Universal Web Scraper</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Universal Web Scraper</h1>
+        
+        <div class="scraper-types">
+            <button onclick="showForm('jobs')">Job Scraper</button>
+            <button onclick="showForm('news')">News Scraper</button>
+            <button onclick="showForm('stocks')">Stock Scraper</button>
+        </div>
+
+        <!-- Job Scraper Form -->
+        <form id="jobsForm" class="scraper-form" method="POST" action="/scrape">
+            <input type="hidden" name="scraperType" value="jobs">
+            <input type="url" name="jobs_url" placeholder="Enter jobs page URL" required>
+            <input type="text" name="container_selector" placeholder="Container selector" required>
+            <input type="text" name="title_selector" placeholder="Title selector" required>
+            <input type="text" name="company_selector" placeholder="Company selector" required>
+            <input type="text" name="location_selector" placeholder="Location selector" required>
+            <button type="submit">Scrape Jobs</button>
+        </form>
+
+        <!-- News Scraper Form -->
+        <form id="newsForm" class="scraper-form" method="POST" action="/scrape">
+            <input type="hidden" name="scraperType" value="news">
+            <input type="url" name="news_url" placeholder="Enter news page URL" required>
+            <input type="text" name="news_container_selector" placeholder="Container selector" required>
+            <input type="text" name="news_title_selector" placeholder="Title selector" required>
+            <input type="text" name="content_selector" placeholder="Content selector" required>
+            <input type="text" name="source_selector" placeholder="Source selector" required>
+            <button type="submit">Scrape News</button>
+        </form>
+
+        <!-- Stock Scraper Form -->
+        <form id="stocksForm" class="scraper-form" method="POST" action="/scrape">
+            <input type="hidden" name="scraperType" value="stocks">
+            <input type="text" name="stock_symbol" placeholder="Enter stock symbol (e.g., AAPL)" required>
+            <button type="submit">Get Stock Price</button>
+        </form>
+    </div>
+
+    <script>
+        function showForm(formType) {
+            document.querySelectorAll('.scraper-form').forEach(form => {
+                form.style.display = 'none';
+            });
+            document.getElementById(`${formType}Form`).style.display = 'block';
+        }
+        // Show jobs form by default
+        showForm('jobs');
+    </script>
+</body>
+</html>
