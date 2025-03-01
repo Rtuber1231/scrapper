@@ -1,58 +1,43 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Universal Web Scraper</title>
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Universal Web Scraper</h1>
-        
-        <div class="scraper-types">
-            <button onclick="showForm('jobs')">Job Scraper</button>
-            <button onclick="showForm('news')">News Scraper</button>
-            <button onclick="showForm('stocks')">Stock Scraper</button>
+        <h1>Web Scraper Pro</h1>
+        <div class="tabs">
+            <button class="active" data-type="jobs">Jobs</button>
+            <button data-type="news">News</button>
+            <button data-type="stock">Stocks</button>
         </div>
-
-        <!-- Job Scraper Form -->
-        <form id="jobsForm" class="scraper-form" method="POST" action="/scrape">
-            <input type="hidden" name="scraperType" value="jobs">
-            <input type="url" name="jobs_url" placeholder="Enter jobs page URL" required>
-            <input type="text" name="container_selector" placeholder="Container selector" required>
-            <input type="text" name="title_selector" placeholder="Title selector" required>
-            <input type="text" name="company_selector" placeholder="Company selector" required>
-            <input type="text" name="location_selector" placeholder="Location selector" required>
-            <button type="submit">Scrape Jobs</button>
+        
+        <form id="scraperForm">
+            <div class="form-group jobs">
+                <input type="url" id="jobsUrl" placeholder="Enter jobs page URL" required>
+                <input type="text" id="containerSel" placeholder="Container selector (CSS)" required>
+                <input type="text" id="titleSel" placeholder="Title selector (CSS)" required>
+                <input type="text" id="companySel" placeholder="Company selector (CSS)">
+            </div>
+            
+            <div class="form-group stock hidden">
+                <input type="text" id="stockSymbol" placeholder="Stock symbol (e.g., AAPL)" required>
+            </div>
+            
+            <button type="submit">Scrape Now</button>
         </form>
-
-        <!-- News Scraper Form -->
-        <form id="newsForm" class="scraper-form" method="POST" action="/scrape">
-            <input type="hidden" name="scraperType" value="news">
-            <input type="url" name="news_url" placeholder="Enter news page URL" required>
-            <input type="text" name="news_container_selector" placeholder="Container selector" required>
-            <input type="text" name="news_title_selector" placeholder="Title selector" required>
-            <input type="text" name="content_selector" placeholder="Content selector" required>
-            <input type="text" name="source_selector" placeholder="Source selector" required>
-            <button type="submit">Scrape News</button>
-        </form>
-
-        <!-- Stock Scraper Form -->
-        <form id="stocksForm" class="scraper-form" method="POST" action="/scrape">
-            <input type="hidden" name="scraperType" value="stocks">
-            <input type="text" name="stock_symbol" placeholder="Enter stock symbol (e.g., AAPL)" required>
-            <button type="submit">Get Stock Price</button>
-        </form>
+        
+        <div id="results"></div>
+        <div id="loading" class="hidden">
+            <div class="loader"></div>
+            <p>Scraping data...</p>
+        </div>
+        <div id="error" class="hidden error"></div>
     </div>
 
-    <script>
-        function showForm(formType) {
-            document.querySelectorAll('.scraper-form').forEach(form => {
-                form.style.display = 'none';
-            });
-            document.getElementById(`${formType}Form`).style.display = 'block';
-        }
-        // Show jobs form by default
-        showForm('jobs');
-    </script>
+    <script src="assets/js/app.js"></script>
 </body>
 </html>
